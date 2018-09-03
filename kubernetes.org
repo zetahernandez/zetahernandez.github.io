@@ -1,0 +1,579 @@
+* Kubernetes config
+** Kubespray
+#+ATTR_HTML: :title The Org mode homepage :style color:red;
+[[https://github.com/kubernetes-incubator/kubespray]]
+
+Before create the vagrant cluster please change the following configuration
+#+BEGIN_SRC bash
+kubespray(git:master): git diff
+diff --git a/Vagrantfile b/Vagrantfile
+index 9db4be3a..2c32ee80 100644
+--- a/Vagrantfile
++++ b/Vagrantfile
+@@ -24,12 +24,12 @@ SUPPORTED_OS = {
+ $num_instances = 3
+ $instance_name_prefix = "k8s"
+ $vm_gui = false
+-$vm_memory = 2048
+-$vm_cpus = 1
++$vm_memory = 4096
++$vm_cpus = 4
+ $shared_folders = {}
+ $forwarded_ports = {}
+ $subnet = "172.17.8"
+-$os = "ubuntu"
++$os = "coreos-stable"
+ $network_plugin = "flannel"
+ # The first three nodes are etcd servers
+ $etcd_instances = $num_instances
+diff --git a/roles/network_plugin/flannel/defaults/main.yml b/roles/network_plugin/flannel/defaults/main.yml
+index e48a9475..947e0d40 100644
+--- a/roles/network_plugin/flannel/defaults/main.yml
++++ b/roles/network_plugin/flannel/defaults/main.yml
+@@ -6,7 +6,7 @@
+
+ ## interface that should be used for flannel operations
+ ## This is actually an inventory cluster-level item
+-# flannel_interface:
++flannel_interface: eth1
+
+ ## Select interface that should be used for flannel operations by regexp on Name or IP
+ ## This is actually an inventory cluster-level item
+@@ -25,4 +25,4 @@ flannel_memory_requests: 64M
+ flannel_cpu_requests: 150m
+
+ # Legacy directory, will be removed if found.
+-flannel_cert_dir: /etc/flannel/certs
+\ No newline at end of file
++flannel_cert_dir: /etc/flannel/certs
+#+END_SRC
+
+
+#+BEGIN_SRC bash
+vagrant up
+#+END_SRC
+
+** Get credetinals to use kubectl
+Kubectl uses ~/.kube/config authority certificate to get access to the cluster
+#+BEGIN_SRC bash
+vagrant ssh k8s-01
+
+# copy the content of the /etc/kubernetes/admin.conf to your host ~/.kube/config
+core@k8s-01 ~ $ sudo cat /etc/kubernetes/admin.conf
+
+kubectl cluster-info
+#+END_SRC
+
+** Check all pods are ready and healthy
+#+BEGIN_SRC bash
+~/kubespray: kubectl get all --all-namespaces
+NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
+kube-system   po/kube-apiserver-k8s-01                   1/1       Running   1          1h
+kube-system   po/kube-apiserver-k8s-02                   1/1       Running   0          1h
+kube-system   po/kube-controller-manager-k8s-01          1/1       Running   0          1h
+kube-system   po/kube-controller-manager-k8s-02          1/1       Running   0          1h
+kube-system   po/kube-dns-79d99cdcd5-5x9fr               3/3       Running   0          1h
+kube-system   po/kube-dns-79d99cdcd5-mzpvg               3/3       Running   0          1h
+kube-system   po/kube-flannel-fpmmc                      2/2       Running   0          1h
+kube-system   po/kube-flannel-rz7wg                      2/2       Running   0          1h
+kube-system   po/kube-flannel-sv62m                      2/2       Running   0          1h
+kube-system   po/kube-proxy-k8s-01                       1/1       Running   0          1h
+kube-system   po/kube-proxy-k8s-02                       1/1       Running   0          1h
+kube-system   po/kube-proxy-k8s-03                       1/1       Running   0          1h
+kube-system   po/kube-scheduler-k8s-01                   1/1       Running   0          1h
+kube-system   po/kube-scheduler-k8s-02                   1/1       Running   0          1h
+kube-system   po/kubedns-autoscaler-5564b5585f-xq58j     1/1       Running   0          1h
+kube-system   po/kubernetes-dashboard-69cb58d748-l6lgn   1/1       Running   0          1h
+kube-system   po/nginx-proxy-k8s-03                      1/1       Running   0          1h
+
+NAMESPACE     NAME                       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
+default       svc/kubernetes             10.233.0.1      <none>        443/TCP         1h
+kube-system   svc/kube-dns               10.233.0.3      <none>        53/UDP,53/TCP   1h
+kube-system   svc/kubernetes-dashboard   10.233.45.164   <none>        443/TCP         1h
+
+NAMESPACE     NAME                          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deploy/kube-dns               2         2         2            2           1h
+kube-system   deploy/kubedns-autoscaler     1         1         1            1           1h
+kube-system   deploy/kubernetes-dashboard   1         1         1            1           1h
+
+NAMESPACE     NAME                                 DESIRED   CURRENT   READY     AGE
+kube-system   rs/kube-dns-79d99cdcd5               2         2         2         1h
+kube-system   rs/kubedns-autoscaler-5564b5585f     1         1         1         1h
+kube-system   rs/kubernetes-dashboard-69cb58d748   1         1         1         1h
+#+END_SRC
+
+** Kubernetes Dashboard accesible
+
+Load the kube proxy
+
+#+BEGIN_SRC bash
+~/kubespray: kubectl proxy
+
+# or accessible remotly
+
+~/kubespray: kubectl proxy --address 0.0.0.0 --accept-hosts '.*'
+
+#+END_SRC
+
+Load the dashboard
+#+ATTR_HTML: :title The Org mode homepage :style color:red;
+[[http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login]]
+
+
+** Create an admin user
+#+ATTR_HTML: :title Kubernetes Dashboard ;
+[[https://github.com/kubernetes/dashboard/wiki/Creating-sample-user]]
+
+#+BEGIN_SRC yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kube-system
+#+END_SRC
+
+Create a Cluster Role binding
+
+#+BEGIN_SRC yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kube-system
+
+#+END_SRC
+
+Get the Bearer Token and now copy the token and paste it into Enter token field on log in screen.
+
+#+BEGIN_SRC bash
+~/kubespray: kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+#+END_SRC
+
+Click Sign in button and that's it. You are now logged in as an admin.
+
+
+* Ingress
+
+#+ATTR_HTML: :title Ingress Nginx
+[[https://github.com/kubernetes/ingress-nginx]]
+
+An Ingress is a collection of rules that allow inbound connections to reach the cluster services.
+
+    internet
+        |
+   [ Ingress ]
+   --|-----|--
+   [ Services ]
+
+Mandatory commands
+#+BEGIN_SRC bash
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/namespace.yaml \
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/default-backend.yaml \
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/configmap.yaml \
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/tcp-services-configmap.yaml \
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/udp-services-configmap.yaml \
+    | kubectl apply -f -
+#+END_SRC
+
+Install with RBAC roles
+
+#+BEGIN_SRC bash
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/rbac.yaml \
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/with-rbac.yaml \
+    | kubectl apply -f -
+#+END_SRC
+
+BareMetal Service NodePort
+
+Type NodePort
+If you set the type field to "NodePort", the Kubernetes master will allocate a port from a flag-configured range (default: 30000-32767),
+and each Node will proxy that port (the same port number on every Node) into your Service. That port will be reported in your Service’s spec.ports[*].nodePort field.
+
+
+#+BEGIN_SRC bash
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml \
+    | kubectl apply -f -
+#+END_SRC
+
+
+Get the node ports for the ingress services
+
+#+BEGIN_SRC bash
+kubespray(git:master): kubectl get services -n ingress-nginx
+NAME                   CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+default-http-backend   10.233.51.161   <none>        80/TCP                       4m
+ingress-nginx          10.233.15.116   <nodes>       80:31814/TCP,443:32684/TCP   2m
+#+END_SRC
+
+
+Load Balancer
+
+Configure your load balancer in front of your cluster to route all the http request to the cluster nodes
+
+#+BEGIN_SRC bash
+global
+  maxconn 256
+  debug
+
+defaults
+ log global
+ mode tcp
+ timeout connect 5000ms
+ timeout client 50000ms
+ timeout server 50000ms
+
+frontend ft_https_pricetracker8003
+ bind *:8003
+ mode tcp
+ default_backend bk_https_pricetracker
+
+frontend ft_http_pricetracker8000
+ bind *:8000
+ mode tcp
+ default_backend bk_http_pricetracker
+
+frontend ft_https_pricetracker443
+ bind *:443
+ mode tcp
+ default_backend bk_https_pricetracker
+
+frontend ft_http_pricetracker80
+ bind *:80
+ mode tcp
+ default_backend bk_http_pricetracker
+
+backend bk_https_pricetracker
+ mode tcp
+ server node1 172.17.8.101:32684 check
+ server node2 172.17.8.102:32684 check
+ server node3 172.17.8.103:32684 check
+ server node4 172.17.8.104:32684 check
+ server node5 172.17.8.105:32684 check
+
+backend bk_http_pricetracker
+ mode tcp
+ server node1 172.17.8.101:31814 check
+ server node2 172.17.8.102:31814 check
+ server node3 172.17.8.103:31814 check
+ server node4 172.17.8.104:31814 check
+ server node5 172.17.8.105:31814 check
+#+END_SRC
+
+** Cert Manager
+
+https://github.com/jetstack/cert-manager
+
+#+BEGIN_SRC bash
+$ git clone https://github.com/jetstack/cert-manager.git
+$ cd cert-manager
+$ kubectl -n cert-manager apply -f docs/deploy/rbac/
+$ kubectl -n cert-manager get all
+#+END_SRC
+
+
+Creating a simple CA based issuer
+
+#+BEGIN_SRC bash
+$ openssl genrsa -out ca.key 2048
+$ openssl req -x509 -new -nodes -key ca.key -subj "/CN=precioszeta.com" -days 3650 -out ca.crt
+$ kubectl create secret tls ca-key-pair --cert=ca.crt --key=ca.key --namespace kube-system
+#+END_SRC
+
+We can now create an Issuer referencing our Secret.
+#+BEGIN_SRC yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: ca-issuer
+  namespace: kube-system
+spec:
+  ca:
+    secretName: ca-key-pair
+#+END_SRC
+
+
+Create a Certificate for kubernetes dashboard
+
+#+BEGIN_SRC yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: kubernetes-dashboard-com
+  namespace: kube-system
+spec:
+  secretName: kubernetes-dashboard-com
+  issuerRef:
+    name: ca-issuer
+    # We can reference ClusterIssuers by changing the kind here.
+    # The default value is Issuer (i.e. a locally namespaced Issuer)
+    kind: Issuer
+  commonName: kubernetes.precioszeta.com
+  dnsNames:
+  - www.kubernetes.precioszeta.com
+#+END_SRC
+
+Inspect the certificate
+
+#+BEGIN_SRC bash
+$ kubectl describe certificate kubernetes-dashboard-com -n kube-system
+
+Name:		kubernetes-dashboard-com
+Namespace:	kube-system
+Labels:		<none>
+Annotations:	<none>
+API Version:	certmanager.k8s.io/v1alpha1
+Kind:		Certificate
+Metadata:
+  Cluster Name:
+  Creation Timestamp:	2018-03-31T00:37:05Z
+  Generation:		0
+  Resource Version:	19706
+  Self Link:		/apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/certificates/kubernetes-dashboard-com
+  UID:			a31e0d89-347b-11e8-af36-080027d2905c
+Spec:
+  Common Name:	kubernetes.precioszeta.com
+  Dns Names:
+    www.kubernetes.precioszeta.com
+  Issuer Ref:
+    Kind:	Issuer
+    Name:	ca-issuer
+  Secret Name:	kubernetes-dashboard-com
+Status:
+  Conditions:
+    Last Transition Time:	2018-03-31T00:37:05Z
+    Message:			Certificate issued successfully
+    Reason:			CertIssueSuccess
+    Status:			True
+    Type:			Ready
+Events:
+  FirstSeen	LastSeen	Count	From			SubObjectPath	Type		Reason			Message
+  ---------	--------	-----	----			-------------	--------	------			-------
+  35s		35s		1	cert-manager-controller			Warning		ErrorCheckCertificate	Error checking existing TLS certificate: secret "kubernetes-dashboard-com" not found
+  35s		35s		1	cert-manager-controller			Normal		PrepareCertificate	Preparing certificate with issuer
+  35s		35s		1	cert-manager-controller			Normal		IssueCertificate	Issuing certificate...
+  35s		35s		1	cert-manager-controller			Normal		CeritifcateIssued	Certificated issued successfully
+  35s		35s		2	cert-manager-controller			Normal		RenewalScheduled	Certificate scheduled for renewal in 8039 hours
+#+END_SRC
+
+
+* Kubernetes Dashboard with oauth2_proxy
+
+The best way to expose the Kubernetes Dashboard (or any other dashboard like Jenkins) is to use an authenticating proxy.
+
+https://cdn-images-1.medium.com/max/1600/1*My-azKvnd_VgJsbRKWPlNw.png
+
+Create a GitHub app
+Go to https://github.com/settings/developers
+and create a new application.
+Users will see this information when logging into the proxy so make sure it is something they’ll trust.
+The key thing to get right is the callback URL.
+Set that to https://kubernetes.precioszeta.com/oauth2/callback
+
+Create a Kubernetes Secret for these values
+
+#+BEGIN_SRC bash
+$ kubectl create secret generic dashboard-proxy-secret \
+  -o yaml --dry-run \
+  -n kube-system \
+  --from-literal=client-id=97a5d47e775f844b06d0 \
+  --from-literal=client-secret=f2fbea21867b40b4964716eedf23eccdab5a2487 \
+  --from-literal=cookie=$(openssl rand 16 -hex) > dashboard-proxy-secret.yaml
+$ kubectl apply -f dashboard-proxy-secret.yaml -n kube-system
+#+END_SRC
+
+Launch the proxy with Ingress
+
+#+BEGIN_SRC yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: dashboard-proxy
+  name: dashboard-proxy
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dashboard-proxy
+  template:
+    metadata:
+      labels:
+        app: dashboard-proxy
+    spec:
+      containers:
+      - args:
+        - --cookie-secure=false
+        - --provider=github
+        - --upstream=http://kubernetes-dashboard.kube-system.svc.cluster.local
+        - --http-address=0.0.0.0:8080
+        - --redirect-url=https://kubernetes.precioszeta.com/oauth2/callback
+        - --email-domain=*
+        - --github-org=zetapricetracker
+        - --pass-basic-auth=false
+        - --pass-access-token=false
+        - --ssl-insecure-skip-verify  # use for unsigned certificats
+        env:
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: cookie
+              name: dashboard-proxy-secret
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: client-id
+              name: dashboard-proxy-secret
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: client-secret
+              name: dashboard-proxy-secret
+        image: a5huynh/oauth2_proxy:2.2
+        name: oauth-proxy
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: dashboard-proxy
+  name: dashboard-proxy
+  namespace: kube-system
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: dashboard-proxy
+  type: ClusterIP
+---
+# apiVersion: certmanager.k8s.io/v1alpha1
+# kind: Certificate
+# metadata:
+#   name: dashboard-proxy-tls
+#   namespace: kube-system
+# spec:
+# secretName: dashboard-proxy-tls
+#   issuerRef:
+#     name: letsencrypt-prod
+#     kind: ClusterIssuer
+#   commonName:  k8s.i.example.com
+#   dnsNames:
+#   -  k8s.i.example.com
+#   acme:
+#     config:
+#     - http01: {}
+#       domains:
+#       -  k8s.i.example.com
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-proxy
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: kubernetes.precioszeta.com
+    http:
+      paths:
+      - backend:
+          serviceName: dashboard-proxy
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - kubernetes.precioszeta.com
+    secretName: kubernetes-dashboard-com
+
+#+END_SRC
+
+Use HTTP between the proxy and dashboard
+By default the dashboard configures HTTPS with a self signed certificate.
+This is a great approach! In a situation where you can’t have a public certificate, a self signed cert is better than nothing.
+It provides protection from eavesdropping, but not from man-in-the-middle attacks.
+
+#+BEGIN_SRC bash
+$ kubectl -n kube-system edit deployment kubernetes-dashboard
+#+END_SRC
+
+Change all instances of 8443 to 9090
+Set the livenessProbe scheme to HTTP (instead of HTTPS)
+Set the arguments (and remove auto-generate-certificates):
+#+BEGIN_SRC bash
+- --insecure-bind-address=0.0.0.0
+- --insecure-port=9090
+- --enable-insecure-login
+#+END_SRC
+
+Now edit the Service
+
+#+BEGIN_SRC bash
+$ kubectl -n kube-system edit service kubernetes-dashboard
+
+ports:
+- port: 80
+  protocol: TCP
+  targetPort: 9090
+#+END_SRC
+
+** Private docker registry
+
+#+BEGIN_SRC bash
+SECRETNAME=k8s-gcr-auth-ro
+
+kubectl create secret docker-registry $SECRETNAME \
+  --docker-server=https://gcr.io \
+  --docker-username=_json_key \
+  --docker-email=zetahernandez@gmail.com \
+  --docker-password="$(cat k8s-gcr-auth-ro.json)"
+#+END_SRC
+
+
+#+begin_src plantuml :file somefile.png
+title Example Activity Diagram
+note right: Example Function
+(*)--> "Step 1"
+--> "Step 2"
+-> "Step 3"
+--> "Step 4"
+--> === STARTLOOP ===
+note top: For each element in the array
+if "Are we done?" then
+  -> [no] "Do this"
+  -> "Do that"
+  note bottom: Important note\ngoes here
+  -up-> "Increment counters"
+  --> === STARTLOOP ===
+else
+  --> [yes] === ENDLOOP ===
+endif
+--> "Last Step"
+--> (*)
+#+end_src
+
+#+results:
+[[file:somefile.png]]

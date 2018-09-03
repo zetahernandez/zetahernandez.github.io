@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-04-03 Tue 18:28 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="fernandoh" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5bd8dae">1. Kubernetes config</a>
+<ul>
+<li><a href="#org689512a">1.1. Kubespray</a></li>
+<li><a href="#org491e9ea">1.2. Get credetinals to use kubectl</a></li>
+<li><a href="#org5bce9a7">1.3. Check all pods are ready and healthy</a></li>
+<li><a href="#org072c732">1.4. Kubernetes Dashboard accesible</a></li>
+<li><a href="#org87e5d56">1.5. Create an admin user</a></li>
+</ul>
+</li>
+<li><a href="#orgf0743d4">2. Ingress</a>
+<ul>
+<li><a href="#orga529011">2.1. Cert Manager</a></li>
+</ul>
+</li>
+<li><a href="#orgd2dbdb1">3. Kubernetes Dashboard with oauth2<sub>proxy</sub></a>
+<ul>
+<li><a href="#orgb24a5e8">3.1. Private docker registry</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5bd8dae" class="outline-2">
+<h2 id="org5bd8dae"><span class="section-number-2">1</span> Kubernetes config</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org689512a" class="outline-3">
+<h3 id="org689512a"><span class="section-number-3">1.1</span> Kubespray</h3>
+<div class="outline-text-3" id="text-1-1">
+<p title="The Org mode homepage" style="color:red;">
+<a href="https://github.com/kubernetes-incubator/kubespray" title="The Org mode homepage" style="color:red;">https://github.com/kubernetes-incubator/kubespray</a>
+</p>
+
+<p>
+Before create the vagrant cluster please change the following configuration
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #84ffff;">kubespray</span>(git:master): git diff
+diff --git a/Vagrantfile b/Vagrantfile
+index 9db4be3a..2c32ee80 100644
+--- a/Vagrantfile
++++ b/Vagrantfile
+@@ -24,12 +24,12 @@ SUPPORTED_OS = {
+ $<span style="color: #ffcc80;">num_instances</span> = 3
+ $<span style="color: #ffcc80;">instance_name_prefix</span> = <span style="color: #9ccc65;">"k8s"</span>
+ $<span style="color: #ffcc80;">vm_gui</span> = false
+-$<span style="color: #ffcc80;">vm_memory</span> = 2048
+-$<span style="color: #ffcc80;">vm_cpus</span> = 1
++$<span style="color: #ffcc80;">vm_memory</span> = 4096
++$<span style="color: #ffcc80;">vm_cpus</span> = 4
+ $<span style="color: #ffcc80;">shared_folders</span> = {}
+ $<span style="color: #ffcc80;">forwarded_ports</span> = {}
+ $<span style="color: #ffcc80;">subnet</span> = <span style="color: #9ccc65;">"172.17.8"</span>
+-$<span style="color: #ffcc80;">os</span> = <span style="color: #9ccc65;">"ubuntu"</span>
++$<span style="color: #ffcc80;">os</span> = <span style="color: #9ccc65;">"coreos-stable"</span>
+ $<span style="color: #ffcc80;">network_plugin</span> = <span style="color: #9ccc65;">"flannel"</span>
+ <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">The first three nodes are etcd servers</span>
+ $<span style="color: #ffcc80;">etcd_instances</span> = $<span style="color: #ffcc80;">num_instances</span>
+diff --git a/roles/network_plugin/flannel/defaults/main.yml b/roles/network_plugin/flannel/defaults/main.yml
+index e48a9475..947e0d40 100644
+--- a/roles/network_plugin/flannel/defaults/main.yml
++++ b/roles/network_plugin/flannel/defaults/main.yml
+@@ -6,7 +6,7 @@
+
+ <span style="color: #b0bec5;">## </span><span style="color: #b0bec5;">interface that should be used for flannel operations</span>
+ <span style="color: #b0bec5;">## </span><span style="color: #b0bec5;">This is actually an inventory cluster-level item</span>
+-# flannel_interface:
++flannel_interface: eth1
+
+ <span style="color: #b0bec5;">## </span><span style="color: #b0bec5;">Select interface that should be used for flannel operations by regexp on Name or IP</span>
+ <span style="color: #b0bec5;">## </span><span style="color: #b0bec5;">This is actually an inventory cluster-level item</span>
+@@ -25,4 +25,4 @@ flannel_memory_requests: 64M
+ flannel_cpu_requests: 150m
+
+ <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">Legacy directory, will be removed if found.</span>
+-flannel_cert_dir: /etc/flannel/certs
+<span style="color: #9ccc65;">\ </span>No newline at end of file
++flannel_cert_dir: /etc/flannel/certs
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-bash">vagrant up
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org491e9ea" class="outline-3">
+<h3 id="org491e9ea"><span class="section-number-3">1.2</span> Get credetinals to use kubectl</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Kubectl uses ~/.kube/config authority certificate to get access to the cluster
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">vagrant ssh k8s-01
+
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">copy the content of the /etc/kubernetes/admin.conf to your host ~/.kube/config</span>
+core@k8s-01 ~ $ sudo cat /etc/kubernetes/admin.conf
+
+kubectl cluster-info
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5bce9a7" class="outline-3">
+<h3 id="org5bce9a7"><span class="section-number-3">1.3</span> Check all pods are ready and healthy</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-bash">~/kubespray: kubectl get all --all-namespaces
+NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
+kube-system   po/kube-apiserver-k8s-01                   1/1       Running   1          1h
+kube-system   po/kube-apiserver-k8s-02                   1/1       Running   0          1h
+kube-system   po/kube-controller-manager-k8s-01          1/1       Running   0          1h
+kube-system   po/kube-controller-manager-k8s-02          1/1       Running   0          1h
+kube-system   po/kube-dns-79d99cdcd5-5x9fr               3/3       Running   0          1h
+kube-system   po/kube-dns-79d99cdcd5-mzpvg               3/3       Running   0          1h
+kube-system   po/kube-flannel-fpmmc                      2/2       Running   0          1h
+kube-system   po/kube-flannel-rz7wg                      2/2       Running   0          1h
+kube-system   po/kube-flannel-sv62m                      2/2       Running   0          1h
+kube-system   po/kube-proxy-k8s-01                       1/1       Running   0          1h
+kube-system   po/kube-proxy-k8s-02                       1/1       Running   0          1h
+kube-system   po/kube-proxy-k8s-03                       1/1       Running   0          1h
+kube-system   po/kube-scheduler-k8s-01                   1/1       Running   0          1h
+kube-system   po/kube-scheduler-k8s-02                   1/1       Running   0          1h
+kube-system   po/kubedns-autoscaler-5564b5585f-xq58j     1/1       Running   0          1h
+kube-system   po/kubernetes-dashboard-69cb58d748-l6lgn   1/1       Running   0          1h
+kube-system   po/nginx-proxy-k8s-03                      1/1       Running   0          1h
+
+NAMESPACE     NAME                       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
+default       svc/kubernetes             10.233.0.1      &lt;none&gt;        443/TCP         1h
+kube-system   svc/kube-dns               10.233.0.3      &lt;none&gt;        53/UDP,53/TCP   1h
+kube-system   svc/kubernetes-dashboard   10.233.45.164   &lt;none&gt;        443/TCP         1h
+
+NAMESPACE     NAME                          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deploy/kube-dns               2         2         2            2           1h
+kube-system   deploy/kubedns-autoscaler     1         1         1            1           1h
+kube-system   deploy/kubernetes-dashboard   1         1         1            1           1h
+
+NAMESPACE     NAME                                 DESIRED   CURRENT   READY     AGE
+kube-system   rs/kube-dns-79d99cdcd5               2         2         2         1h
+kube-system   rs/kubedns-autoscaler-5564b5585f     1         1         1         1h
+kube-system   rs/kubernetes-dashboard-69cb58d748   1         1         1         1h
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org072c732" class="outline-3">
+<h3 id="org072c732"><span class="section-number-3">1.4</span> Kubernetes Dashboard accesible</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Load the kube proxy
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">~/kubespray: kubectl proxy
+
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">or accessible remotly</span>
+
+~/kubespray: kubectl proxy --address 0.0.0.0 --accept-hosts <span style="color: #9ccc65;">'.*'</span>
+
+</pre>
+</div>
+
+<p>
+Load the dashboard
+</p>
+<p title="The Org mode homepage" style="color:red;">
+<a href="http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login" title="The Org mode homepage" style="color:red;">http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org87e5d56" class="outline-3">
+<h3 id="org87e5d56"><span class="section-number-3">1.5</span> Create an admin user</h3>
+<div class="outline-text-3" id="text-1-5">
+<p title="Kubernetes Dashboard ;">
+<a href="https://github.com/kubernetes/dashboard/wiki/Creating-sample-user" title="Kubernetes Dashboard ;">https://github.com/kubernetes/dashboard/wiki/Creating-sample-user</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #ffcc80;">apiVersion</span>: v1
+<span style="color: #ffcc80;">kind</span>: ServiceAccount
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">name</span>: admin-user
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+</pre>
+</div>
+
+<p>
+Create a Cluster Role binding
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #ffcc80;">apiVersion</span>: rbac.authorization.k8s.io/v1beta1
+<span style="color: #ffcc80;">kind</span>: ClusterRoleBinding
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">name</span>: admin-user
+<span style="color: #ffcc80;">roleRef</span>:
+  <span style="color: #ffcc80;">apiGroup</span>: rbac.authorization.k8s.io
+  <span style="color: #ffcc80;">kind</span>: ClusterRole
+  <span style="color: #ffcc80;">name</span>: cluster-admin
+<span style="color: #ffcc80;">subjects</span>:
+- <span style="color: #ffcc80;">kind</span>: ServiceAccount
+  <span style="color: #ffcc80;">name</span>: admin-user
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+
+</pre>
+</div>
+
+<p>
+Get the Bearer Token and now copy the token and paste it into Enter token field on log in screen.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">~/kubespray: kubectl -n kube-system describe secret $(<span style="color: #ffd700;">kubectl</span> -n kube-system get secret | grep admin-user | awk <span style="color: #9ccc65;">'{print $1}'</span>)
+</pre>
+</div>
+
+<p>
+Click Sign in button and that's it. You are now logged in as an admin.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf0743d4" class="outline-2">
+<h2 id="orgf0743d4"><span class="section-number-2">2</span> Ingress</h2>
+<div class="outline-text-2" id="text-2">
+<p title="Ingress Nginx">
+<a href="https://github.com/kubernetes/ingress-nginx" title="Ingress Nginx">https://github.com/kubernetes/ingress-nginx</a>
+</p>
+
+<p>
+An Ingress is a collection of rules that allow inbound connections to reach the cluster services.
+</p>
+
+<p>
+internet
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+[ Ingress ]
+&#x2013;|&#x2013;&#x2014;|&#x2013;
+[ Services ]
+</p>
+
+<p>
+Mandatory commands
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/namespace.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/default-backend.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/configmap.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/tcp-services-configmap.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/udp-services-configmap.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+</pre>
+</div>
+
+<p>
+Install with RBAC roles
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/rbac.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/with-rbac.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+</pre>
+</div>
+
+<p>
+BareMetal Service NodePort
+</p>
+
+<p>
+Type NodePort
+If you set the type field to "NodePort", the Kubernetes master will allocate a port from a flag-configured range (default: 30000-32767),
+and each Node will proxy that port (the same port number on every Node) into your Service. That port will be reported in your Service’s spec.ports[*].nodePort field.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-bash">curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml <span style="color: #9ccc65;">\</span>
+    | kubectl apply -f -
+</pre>
+</div>
+
+
+<p>
+Get the node ports for the ingress services
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #84ffff;">kubespray</span>(git:master): kubectl get services -n ingress-nginx
+NAME                   CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+default-http-backend   10.233.51.161   &lt;none&gt;        80/TCP                       4m
+ingress-nginx          10.233.15.116   &lt;nodes&gt;       80:31814/TCP,443:32684/TCP   2m
+</pre>
+</div>
+
+
+<p>
+Load Balancer
+</p>
+
+<p>
+Configure your load balancer in front of your cluster to route all the http request to the cluster nodes
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">global
+  maxconn 256
+  debug
+
+defaults
+ log global
+ mode tcp
+ timeout connect 5000ms
+ timeout client 50000ms
+ timeout server 50000ms
+
+frontend ft_https_pricetracker8003
+ <span style="color: #ff8A65;">bind</span> *:8003
+ mode tcp
+ default_backend bk_https_pricetracker
+
+frontend ft_http_pricetracker8000
+ <span style="color: #ff8A65;">bind</span> *:8000
+ mode tcp
+ default_backend bk_http_pricetracker
+
+frontend ft_https_pricetracker443
+ <span style="color: #ff8A65;">bind</span> *:443
+ mode tcp
+ default_backend bk_https_pricetracker
+
+frontend ft_http_pricetracker80
+ <span style="color: #ff8A65;">bind</span> *:80
+ mode tcp
+ default_backend bk_http_pricetracker
+
+backend bk_https_pricetracker
+ mode tcp
+ server node1 172.17.8.101:32684 check
+ server node2 172.17.8.102:32684 check
+ server node3 172.17.8.103:32684 check
+ server node4 172.17.8.104:32684 check
+ server node5 172.17.8.105:32684 check
+
+backend bk_http_pricetracker
+ mode tcp
+ server node1 172.17.8.101:31814 check
+ server node2 172.17.8.102:31814 check
+ server node3 172.17.8.103:31814 check
+ server node4 172.17.8.104:31814 check
+ server node5 172.17.8.105:31814 check
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga529011" class="outline-3">
+<h3 id="orga529011"><span class="section-number-3">2.1</span> Cert Manager</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="https://github.com/jetstack/cert-manager">https://github.com/jetstack/cert-manager</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ git clone https://github.com/jetstack/cert-manager.git
+$ cd cert-manager
+$ kubectl -n cert-manager apply -f docs/deploy/rbac/
+$ kubectl -n cert-manager get all
+</pre>
+</div>
+
+
+<p>
+Creating a simple CA based issuer
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ openssl genrsa -out ca.key 2048
+$ openssl req -x509 -new -nodes -key ca.key -subj <span style="color: #9ccc65;">"/CN=precioszeta.com"</span> -days 3650 -out ca.crt
+$ kubectl create secret tls ca-key-pair --cert=ca.crt --key=ca.key --namespace kube-system
+</pre>
+</div>
+
+<p>
+We can now create an Issuer referencing our Secret.
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #ffcc80;">apiVersion</span>: certmanager.k8s.io/v1alpha1
+<span style="color: #ffcc80;">kind</span>: Issuer
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">name</span>: ca-issuer
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+<span style="color: #ffcc80;">spec</span>:
+  <span style="color: #ffcc80;">ca</span>:
+    <span style="color: #ffcc80;">secretName</span>: ca-key-pair
+</pre>
+</div>
+
+
+<p>
+Create a Certificate for kubernetes dashboard
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #ffcc80;">apiVersion</span>: certmanager.k8s.io/v1alpha1
+<span style="color: #ffcc80;">kind</span>: Certificate
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">name</span>: kubernetes-dashboard-com
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+<span style="color: #ffcc80;">spec</span>:
+  <span style="color: #ffcc80;">secretName</span>: kubernetes-dashboard-com
+  <span style="color: #ffcc80;">issuerRef</span>:
+    <span style="color: #ffcc80;">name</span>: ca-issuer
+    <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">We can reference ClusterIssuers by changing the kind here.</span>
+    <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">The default value is Issuer (i.e. a locally namespaced Issuer)</span>
+    <span style="color: #ffcc80;">kind</span>: Issuer
+  <span style="color: #ffcc80;">commonName</span>: kubernetes.precioszeta.com
+  <span style="color: #ffcc80;">dnsNames</span>:
+  - www.kubernetes.precioszeta.com
+</pre>
+</div>
+
+<p>
+Inspect the certificate
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ kubectl describe certificate kubernetes-dashboard-com -n kube-system
+
+Name:           kubernetes-dashboard-com
+Namespace:      kube-system
+Labels:         &lt;none&gt;
+Annotations:    &lt;none&gt;
+API Version:    certmanager.k8s.io/v1alpha1
+Kind:           Certificate
+Metadata:
+  Cluster Name:
+  Creation Timestamp:   2018-03-31T00:37:05Z
+  Generation:           0
+  Resource Version:     19706
+  Self Link:            /apis/certmanager.k8s.io/v1alpha1/namespaces/kube-system/certificates/kubernetes-dashboard-com
+  UID:                  a31e0d89-347b-11e8-af36-080027d2905c
+Spec:
+  Common Name:  kubernetes.precioszeta.com
+  Dns Names:
+    www.kubernetes.precioszeta.com
+  Issuer Ref:
+    Kind:       Issuer
+    Name:       ca-issuer
+  Secret Name:  kubernetes-dashboard-com
+Status:
+  Conditions:
+    Last Transition Time:       2018-03-31T00:37:05Z
+    Message:                    Certificate issued successfully
+    Reason:                     CertIssueSuccess
+    Status:                     True
+    Type:                       Ready
+Events:
+  FirstSeen     LastSeen        Count   From                    SubObjectPath   Type            Reason                  Message
+  ---------     --------        -----   ----                    -------------   --------        ------                  -------
+  35s           35s             1       cert-manager-controller                 Warning         ErrorCheckCertificate   Error checking existing TLS certificate: secret <span style="color: #9ccc65;">"kubernetes-dashboard-com"</span> not found
+  35s           35s             1       cert-manager-controller                 Normal          PrepareCertificate      Preparing certificate with issuer
+  35s           35s             1       cert-manager-controller                 Normal          IssueCertificate        Issuing certificate...
+  35s           35s             1       cert-manager-controller                 Normal          CeritifcateIssued       Certificated issued successfully
+  35s           35s             2       cert-manager-controller                 Normal          RenewalScheduled        Certificate scheduled for renewal<span style="color: #fff59d;"> in</span> 8039 hours
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd2dbdb1" class="outline-2">
+<h2 id="orgd2dbdb1"><span class="section-number-2">3</span> Kubernetes Dashboard with oauth2<sub>proxy</sub></h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The best way to expose the Kubernetes Dashboard (or any other dashboard like Jenkins) is to use an authenticating proxy.
+</p>
+
+
+<div class="figure">
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*My-azKvnd_VgJsbRKWPlNw.png" alt="1*My-azKvnd_VgJsbRKWPlNw.png" />
+</p>
+</div>
+
+<p>
+Create a GitHub app
+Go to <a href="https://github.com/settings/developers">https://github.com/settings/developers</a>
+and create a new application.
+Users will see this information when logging into the proxy so make sure it is something they’ll trust.
+The key thing to get right is the callback URL.
+Set that to <a href="https://kubernetes.precioszeta.com/oauth2/callback">https://kubernetes.precioszeta.com/oauth2/callback</a>
+</p>
+
+<p>
+Create a Kubernetes Secret for these values
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ kubectl create secret generic dashboard-proxy-secret <span style="color: #9ccc65;">\</span>
+  -o yaml --dry-run <span style="color: #9ccc65;">\</span>
+  -n kube-system <span style="color: #9ccc65;">\</span>
+  --from-literal=client-id=97a5d47e775f844b06d0 <span style="color: #9ccc65;">\</span>
+  --from-literal=client-secret=f2fbea21867b40b4964716eedf23eccdab5a2487 <span style="color: #9ccc65;">\</span>
+  --from-literal=<span style="color: #ffcc80;">cookie</span>=$(<span style="color: #ffd700;">openssl</span> rand 16 -hex) &gt; dashboard-proxy-secret.yaml
+$ kubectl apply -f dashboard-proxy-secret.yaml -n kube-system
+</pre>
+</div>
+
+<p>
+Launch the proxy with Ingress
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #ffcc80;">apiVersion</span>: extensions/v1beta1
+<span style="color: #ffcc80;">kind</span>: Deployment
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">labels</span>:
+    <span style="color: #ffcc80;">app</span>: dashboard-proxy
+  <span style="color: #ffcc80;">name</span>: dashboard-proxy
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+<span style="color: #ffcc80;">spec</span>:
+  <span style="color: #ffcc80;">replicas</span>: 1
+  <span style="color: #ffcc80;">selector</span>:
+    <span style="color: #ffcc80;">matchLabels</span>:
+      <span style="color: #ffcc80;">app</span>: dashboard-proxy
+  <span style="color: #ffcc80;">template</span>:
+    <span style="color: #ffcc80;">metadata</span>:
+      <span style="color: #ffcc80;">labels</span>:
+        <span style="color: #ffcc80;">app</span>: dashboard-proxy
+    <span style="color: #ffcc80;">spec</span>:
+      <span style="color: #ffcc80;">containers</span>:
+      - <span style="color: #ffcc80;">args</span>:
+        - --cookie-secure=false
+        - --provider=github
+        - --upstream=http://kubernetes-dashboard.kube-system.svc.cluster.local
+        - --http-address=0.0.0.0:8080
+        - --redirect-url=https://kubernetes.precioszeta.com/oauth2/callback
+        - --email-domain=*
+        - --github-org=zetapricetracker
+        - --pass-basic-auth=false
+        - --pass-access-token=false
+        - --ssl-insecure-skip-verify  <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">use for unsigned certificats</span>
+        <span style="color: #ffcc80;">env</span>:
+        - <span style="color: #ffcc80;">name</span>: OAUTH2_PROXY_COOKIE_SECRET
+          <span style="color: #ffcc80;">valueFrom</span>:
+            <span style="color: #ffcc80;">secretKeyRef</span>:
+              <span style="color: #ffcc80;">key</span>: cookie
+              <span style="color: #ffcc80;">name</span>: dashboard-proxy-secret
+        - <span style="color: #ffcc80;">name</span>: OAUTH2_PROXY_CLIENT_ID
+          <span style="color: #ffcc80;">valueFrom</span>:
+            <span style="color: #ffcc80;">secretKeyRef</span>:
+              <span style="color: #ffcc80;">key</span>: client-id
+              <span style="color: #ffcc80;">name</span>: dashboard-proxy-secret
+        - <span style="color: #ffcc80;">name</span>: OAUTH2_PROXY_CLIENT_SECRET
+          <span style="color: #ffcc80;">valueFrom</span>:
+            <span style="color: #ffcc80;">secretKeyRef</span>:
+              <span style="color: #ffcc80;">key</span>: client-secret
+              <span style="color: #ffcc80;">name</span>: dashboard-proxy-secret
+        <span style="color: #ffcc80;">image</span>: a5huynh/oauth2_proxy:2.2
+        <span style="color: #ffcc80;">name</span>: oauth-proxy
+        <span style="color: #ffcc80;">ports</span>:
+        - <span style="color: #ffcc80;">containerPort</span>: 8080
+          <span style="color: #ffcc80;">protocol</span>: TCP
+<span style="color: #b0bec5;">---</span>
+<span style="color: #ffcc80;">apiVersion</span>: v1
+<span style="color: #ffcc80;">kind</span>: Service
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">labels</span>:
+    <span style="color: #ffcc80;">run</span>: dashboard-proxy
+  <span style="color: #ffcc80;">name</span>: dashboard-proxy
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+<span style="color: #ffcc80;">spec</span>:
+  <span style="color: #ffcc80;">ports</span>:
+  - <span style="color: #ffcc80;">name</span>: http
+    <span style="color: #ffcc80;">port</span>: 80
+    <span style="color: #ffcc80;">protocol</span>: TCP
+    <span style="color: #ffcc80;">targetPort</span>: 8080
+  <span style="color: #ffcc80;">selector</span>:
+    <span style="color: #ffcc80;">app</span>: dashboard-proxy
+  <span style="color: #ffcc80;">type</span>: ClusterIP
+<span style="color: #b0bec5;">---</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">apiVersion: certmanager.k8s.io/v1alpha1</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">kind: Certificate</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">metadata:</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">name: dashboard-proxy-tls</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">namespace: kube-system</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">spec:</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">secretName: dashboard-proxy-tls</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">issuerRef:</span>
+<span style="color: #b0bec5;">#     </span><span style="color: #b0bec5;">name: letsencrypt-prod</span>
+<span style="color: #b0bec5;">#     </span><span style="color: #b0bec5;">kind: ClusterIssuer</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">commonName:  k8s.i.example.com</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">dnsNames:</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">-  k8s.i.example.com</span>
+<span style="color: #b0bec5;">#   </span><span style="color: #b0bec5;">acme:</span>
+<span style="color: #b0bec5;">#     </span><span style="color: #b0bec5;">config:</span>
+<span style="color: #b0bec5;">#     </span><span style="color: #b0bec5;">- http01: {}</span>
+<span style="color: #b0bec5;">#       </span><span style="color: #b0bec5;">domains:</span>
+<span style="color: #b0bec5;">#       </span><span style="color: #b0bec5;">-  k8s.i.example.com</span>
+<span style="color: #b0bec5;">---</span>
+<span style="color: #ffcc80;">apiVersion</span>: extensions/v1beta1
+<span style="color: #ffcc80;">kind</span>: Ingress
+<span style="color: #ffcc80;">metadata</span>:
+  <span style="color: #ffcc80;">name</span>: dashboard-proxy
+  <span style="color: #ffcc80;">namespace</span>: kube-system
+  <span style="color: #ffcc80;">annotations</span>:
+    <span style="color: #ffcc80;">kubernetes.io/ingress.class</span>: nginx
+<span style="color: #ffcc80;">spec</span>:
+  <span style="color: #ffcc80;">rules</span>:
+  - <span style="color: #ffcc80;">host</span>: kubernetes.precioszeta.com
+    <span style="color: #ffcc80;">http</span>:
+      <span style="color: #ffcc80;">paths</span>:
+      - <span style="color: #ffcc80;">backend</span>:
+          <span style="color: #ffcc80;">serviceName</span>: dashboard-proxy
+          <span style="color: #ffcc80;">servicePort</span>: 8080
+        <span style="color: #ffcc80;">path</span>: /
+  <span style="color: #ffcc80;">tls</span>:
+  - <span style="color: #ffcc80;">hosts</span>:
+    - kubernetes.precioszeta.com
+    <span style="color: #ffcc80;">secretName</span>: kubernetes-dashboard-com
+
+</pre>
+</div>
+
+<p>
+Use HTTP between the proxy and dashboard
+By default the dashboard configures HTTPS with a self signed certificate.
+This is a great approach! In a situation where you can’t have a public certificate, a self signed cert is better than nothing.
+It provides protection from eavesdropping, but not from man-in-the-middle attacks.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ kubectl -n kube-system edit deployment kubernetes-dashboard
+</pre>
+</div>
+
+<p>
+Change all instances of 8443 to 9090
+Set the livenessProbe scheme to HTTP (instead of HTTPS)
+Set the arguments (and remove auto-generate-certificates):
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">- --insecure-bind-address=0.0.0.0
+- --insecure-port=9090
+- --enable-insecure-login
+</pre>
+</div>
+
+<p>
+Now edit the Service
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ kubectl -n kube-system edit service kubernetes-dashboard
+
+ports:
+- port: 80
+  protocol: TCP
+  targetPort: 9090
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb24a5e8" class="outline-3">
+<h3 id="orgb24a5e8"><span class="section-number-3">3.1</span> Private docker registry</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #ffcc80;">SECRETNAME</span>=k8s-gcr-auth-ro
+
+kubectl create secret docker-registry $<span style="color: #ffcc80;">SECRETNAME</span> <span style="color: #9ccc65;">\</span>
+  --docker-server=https://gcr.io <span style="color: #9ccc65;">\</span>
+  --docker-username=_json_key <span style="color: #9ccc65;">\</span>
+  --docker-email=zetahernandez@gmail.com <span style="color: #9ccc65;">\</span>
+  --docker-password=<span style="color: #9ccc65;">"$(</span><span style="color: #ffd700;">cat</span><span style="color: #9ccc65;"> k8s-gcr-auth-ro.json)"</span>
+</pre>
+</div>
+
+
+
+<div class="figure">
+<p><img src="somefile.png" alt="somefile.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: fernandoh</p>
+<p class="date">Created: 2018-04-03 Tue 18:28</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
